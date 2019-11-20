@@ -3,12 +3,17 @@ package src;
 public class Teste {
 
     public static void main(String[] args) {
-        Matriz matriz = new Matriz(2, 2);
+        Matriz matriz = new Matriz(3, 3);
         
         matriz.adicionar(1);
+        matriz.adicionar(3);
+        matriz.adicionar(0);
         matriz.adicionar(2);
-        matriz.adicionar(-5);
-        matriz.adicionar(-3);
+        matriz.adicionar(5);
+        matriz.adicionar(1);
+        matriz.adicionar(2);
+        matriz.adicionar(1);
+        matriz.adicionar(3);
 
         System.out.println(matriz);
 

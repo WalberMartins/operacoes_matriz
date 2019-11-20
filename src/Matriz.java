@@ -110,7 +110,28 @@ public class Matriz {
             return produto[0] - produto[1];
         }
         if(matriz.length == 3) {
-            
+            int[][] matrizSarros = new int[matriz.length][matriz.length+2];
+
+            int c = matriz.length;
+            for(int i = 0; i < matriz.length; i++) {
+                for(int j = 0; j < matriz[0].length; j++) {
+                    matrizSarros[i][j] = matriz[i][j];
+                    if(i <= 1) {
+                        matrizSarros[j][i+c] = matriz[j][i];
+                    }
+                }
+            }
+
+            int[] produto = {(matrizSarros[0][0] * matrizSarros[1][1] * matrizSarros[2][2]), 
+                             (matrizSarros[0][1] * matrizSarros[1][2] * matrizSarros[2][3]),
+                             (matrizSarros[0][2] * matrizSarros[1][3] * matrizSarros[2][4]),
+                             (matrizSarros[0][4] * matrizSarros[1][3] * matrizSarros[2][2]),
+                             (matrizSarros[0][3] * matrizSarros[1][2] * matrizSarros[2][1]),
+                             (matrizSarros[0][2] * matrizSarros[1][1] * matrizSarros[2][0])};
+
+            int determinante = produto[0] + produto[1] + produto[2] - produto[3] - produto[4] - produto[5];
+
+            return determinante;
         }
 
         return 0;
