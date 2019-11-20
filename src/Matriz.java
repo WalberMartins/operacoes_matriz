@@ -1,3 +1,5 @@
+package src;
+
 public class Matriz {
 
     private int[][] matriz;
