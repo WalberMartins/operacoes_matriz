@@ -75,7 +75,7 @@ public class Matriz {
     }
 
     public void multiplicar(Matriz outraMatriz) {
-        if(!(matriz.length == outraMatriz.matriz[0].length))
+        if(!(matriz[0].length == outraMatriz.matriz.length))
             throw new IllegalArgumentException("Impossível multiplicar por essa matriz!");
         
         int[][] novaMatriz = new int[matriz.length][outraMatriz.matriz[0].length];    
@@ -105,36 +105,41 @@ public class Matriz {
             throw new IllegalStateException("A Matriz não é quadrada");
         if(matriz.length == 1)
             return matriz[0][0];
-        if(matriz.length == 2) {
-            int[] produto = {(matriz[0][0] * matriz[1][1]), (matriz[0][1] * matriz[1][0])};
-            return produto[0] - produto[1];
-        }
-        if(matriz.length == 3) {
-            int[][] matrizSarros = new int[matriz.length][matriz.length+2];
-
-            int c = matriz.length;
-            for(int i = 0; i < matriz.length; i++) {
-                for(int j = 0; j < matriz[0].length; j++) {
-                    matrizSarros[i][j] = matriz[i][j];
-                    if(i <= 1) {
-                        matrizSarros[j][i+c] = matriz[j][i];
-                    }
-                }
+        if(matriz.length == 2)
+            return matriz[0][0] * matriz[1][1] - matriz[0][1] * matriz[1][0];
+        
+        int determinante = 0;
+        for(int i = 0; i <= 0; i++) {
+            for(int j = 0; j < matriz[0].length; j++) {
+                determinante += matriz[i][j] * getCofator(i, j);
             }
+        }
+        return determinante;
+    }
 
-            int[] produto = {(matrizSarros[0][0] * matrizSarros[1][1] * matrizSarros[2][2]), 
-                             (matrizSarros[0][1] * matrizSarros[1][2] * matrizSarros[2][3]),
-                             (matrizSarros[0][2] * matrizSarros[1][3] * matrizSarros[2][4]),
-                             (matrizSarros[0][4] * matrizSarros[1][3] * matrizSarros[2][2]),
-                             (matrizSarros[0][3] * matrizSarros[1][2] * matrizSarros[2][1]),
-                             (matrizSarros[0][2] * matrizSarros[1][1] * matrizSarros[2][0])};
+    private int getCofator(int linha, int coluna) {
+        return (int) Math.pow(-1, (linha+coluna)) * getMatrizMenor(linha, coluna).getDeterminante();
+    }
 
-            int determinante = produto[0] + produto[1] + produto[2] - produto[3] - produto[4] - produto[5];
+    private Matriz getMatrizMenor(int linha, int coluna) {
+        Matriz matrizMenor = new Matriz(matriz.length-1, matriz[0].length-1);
 
-            return determinante;
+        int colunaAux = 0, linhaAux = 0;
+        for (int i = 0; i < matriz.length; i++) {
+            if (i == linha) 
+                continue;
+            for (int j = 0; j < matriz[0].length; j++) {
+                if (j == coluna) 
+                    continue;
+                matrizMenor.matriz[linhaAux][colunaAux] = matriz[i][j];
+
+                colunaAux = (colunaAux + 1) % (matriz.length - 1);
+                if (colunaAux == 0) 
+                    linhaAux++;
+            }
         }
 
-        return 0;
+        return matrizMenor;
     }
 
     private boolean verificarOrdem(Matriz outraMatriz) {

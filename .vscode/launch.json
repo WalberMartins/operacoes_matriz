@@ -4,6 +4,12 @@
             "type": "java",
             "name": "CodeLens (Launch) - Teste",
             "request": "launch",
+            "mainClass": "src.Teste"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Teste",
+            "request": "launch",
             "mainClass": "src.Teste",
             "projectName": "operacoes_matriz_cc7118b3"
         },

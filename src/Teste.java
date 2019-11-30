@@ -3,34 +3,15 @@ package src;
 public class Teste {
 
     public static void main(String[] args) {
-        Matriz matriz = new Matriz(3, 3);
+        Matriz matriz = new Matriz(5, 5);
         
-        matriz.adicionar(1);
-        matriz.adicionar(3);
-        matriz.adicionar(0);
-        matriz.adicionar(2);
-        matriz.adicionar(5);
-        matriz.adicionar(1);
-        matriz.adicionar(2);
-        matriz.adicionar(1);
-        matriz.adicionar(3);
+        for(int i = 0; i < 25; i++)
+            matriz.adicionar((int) (Math.random()*10+1));
 
         System.out.println(matriz);
 
         System.out.println(matriz.getDeterminante());
-        
-
-/*        Matriz outraMatriz = new Matriz(6, 4);
-        for(int i = 0; i < 24; i++)
-            outraMatriz.adicionar(i - 1);
-
-
-        System.out.println(outraMatriz);
-
-        matriz.multiplicar(outraMatriz);
-
-        System.out.println(matriz); */
-    
+            
     } 
 
 }
