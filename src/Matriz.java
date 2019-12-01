@@ -53,7 +53,7 @@ public class Matriz {
     }
 
     public void somar(Matriz outraMatriz) {
-        if(!verificarOrdem(outraMatriz))
+        if(!verificarMesmaOrdem(outraMatriz))
             throw new IllegalArgumentException("Matriz de ordem diferente");
 
         for(int i = 0; i < matriz.length; i++) {
@@ -64,7 +64,7 @@ public class Matriz {
     }
 
     public void subtrair(Matriz outraMatriz) {
-        if(!verificarOrdem(outraMatriz))
+        if(!verificarMesmaOrdem(outraMatriz))
             throw new IllegalArgumentException("Matriz de ordem diferente");
 
         for(int i = 0; i < matriz.length; i++) {
@@ -72,6 +72,12 @@ public class Matriz {
                 matriz[i][j] -= outraMatriz.matriz[i][j]; 
             }
         }
+    }
+
+    private boolean verificarMesmaOrdem(Matriz outraMatriz) {
+        if(matriz.length == outraMatriz.matriz.length && matriz[0].length == outraMatriz.matriz[0].length)
+            return true;
+        return false;
     }
 
     public void multiplicar(Matriz outraMatriz) {
@@ -101,7 +107,7 @@ public class Matriz {
     }
 
     public int getDeterminante() {
-        if(matriz.length != matriz[0].length)
+        if(!verificarMatrizQuadrada())
             throw new IllegalStateException("A Matriz não é quadrada");
         if(matriz.length == 1)
             return matriz[0][0];
@@ -132,7 +138,6 @@ public class Matriz {
                 if (j == coluna) 
                     continue;
                 matrizMenor.matriz[linhaAux][colunaAux] = matriz[i][j];
-
                 colunaAux = (colunaAux + 1) % (matriz.length - 1);
                 if (colunaAux == 0) 
                     linhaAux++;
@@ -142,10 +147,39 @@ public class Matriz {
         return matrizMenor;
     }
 
-    private boolean verificarOrdem(Matriz outraMatriz) {
-        if(matriz.length == outraMatriz.matriz.length && matriz[0].length == outraMatriz.matriz[0].length)
+    public boolean verificarSimetria() {
+        if(!verificarMatrizQuadrada())
+            throw new IllegalStateException("A matriz não é quadrada!");
+
+        int c = 0;
+        Matriz matrizTransposta = getTransposta();
+        for(int i = 0; i < matriz.length; i++) {
+            for(int j = 0; j < matriz.length; j++) {
+                if(matriz[i][j] == matrizTransposta.matriz[i][j])
+                    c++;
+            }
+        }
+
+        if(c == matriz.length * matriz[0].length)
             return true;
+
         return false;
+    }
+
+    private boolean verificarMatrizQuadrada() {
+        return matriz.length == matriz[0].length;
+    }
+
+    private Matriz getTransposta() {
+        Matriz matrizTranposta = new Matriz(matriz[0].length, matriz.length);
+
+        for(int i = 0; i < matrizTranposta.matriz.length; i++) {
+            for(int j = 0; j < matrizTranposta.matriz[0].length; j++) {
+                matrizTranposta.matriz[i][j] = matriz[j][i];
+            }
+        }
+
+        return matrizTranposta;
     }
 
     @Override
